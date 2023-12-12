@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "tap-fre",
+    "slug": "tap-fre",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "config": {
+        "firebase": {
+          "apiKey": "AIzaSyB5DvMXKy3rGeIEN_DUi84vg54lDCO72iU",
+          "authDomain": "tapad0.firebaseapp.com",
+          "projectId": "tapad0",
+          "storageBucket": "tapad0.appspot.com",
+          "messagingSenderId": "273420058576",
+          "appId": "1:273420058576:web:fc30d198e0c6f4771d03d5",
+          "measurementId": "G-CRXKESWXDC"
+        }
+      }
+    }
+  }
+}
