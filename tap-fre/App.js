@@ -9,6 +9,8 @@ import { thunk } from "redux-thunk";
 //import { firebase } from "firebase/app";
 
 import AuthScreen from "./src/screens/auth";
+import HomeScreen from "./src/navigation/home";
+import Route from "./src/navigation/main";
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 /*
@@ -24,9 +26,7 @@ if (getApps().length === 0) {
 export default function App() {
   return (
     <Provider store={store}>
-      <View style={styles.container}>
-        <AuthScreen />
-      </View>
+      <Route />
     </Provider>
   );
 }
