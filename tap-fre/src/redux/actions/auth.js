@@ -4,6 +4,7 @@ import {
   getDoc,
   onSnapshot,
   getFirestore,
+  setDoc,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -28,22 +29,39 @@ export const userAuthStateListener = () => (dispatch) => {
   });
 };
 
-export const getCurrentUserInfo = () => (dispatch) => {
+export const getCurrentUserInfo = () => async (dispatch) => {
   const db = getFirestore(fdb);
-  console.log("id", auth.currentUser.uid);
-  const user = onSnapshot(doc(db, "users", auth.currentUser.uid), (doc) => {
+  const userRef = collection(db, "user");
+  const docRef = doc(userRef, auth.currentUser.uid);
+  const res = await getDoc(docRef);
+  console.log(res.data());
+  if (res.exists) {
+    console.log(res.data());
+    return dispatch({
+      type: USER_STATE_CHANGE,
+      currentUser: res.data(),
+      loaded: true,
+    });
+  } else {
+    return dispatch({
+      type: USER_STATE_CHANGE,
+      currentUser: "no exists doc",
+      loaded: true,
+    });
+  }
+
+  /*
+  onSnapshot(doc(userRef, auth.currentUser.uid), (doc) => {
     if (doc.exists) {
-      console.log("dispatched");
-      console.log(doc);
+      console.log(doc.data());
       return dispatch({
         type: USER_STATE_CHANGE,
         currentUser: doc.data(),
-        loaded: true,
+        loaded: truth,
       });
     }
-  });
+  });*/
 };
-
 export const login = (email, password) => (dispatch) =>
   new Promise((resolve, reject) => {
     signInWithEmailAndPassword(auth, email, password)
