@@ -42,19 +42,21 @@ const styles = StyleSheet.create({
     height: 50,
   },
   sideBarContainer: {
-    top: 60,
-    right: 0,
-    marginHorizontal: 20,
+    alignSelf: "flex-start",
     position: "absolute",
+    bottom: 0,
+    flexDirection: "row",
+    marginHorizontal: 20,
   },
   iconText: {
     color: "white",
     fontSize: 12,
-    marginTop: 5,
+    marginHorizontal: 10,
+    marginBottom: 30,
   },
   sideBarButton: {
     alignItems: "center",
-    marginBottom: 25,
+    marginHorizontal: 10,
   },
 });
 

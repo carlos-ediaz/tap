@@ -13,6 +13,7 @@ export default function CameraScreen() {
   const [hasCameraPermissions, setHasCameraPermissions] = useState(false);
   const [hasAudioPermissions, setHasAudioPermissions] = useState(false);
   const [hasGalleryPermissions, setHasGalleryPermissions] = useState(false);
+  const [hasMediaPermissions, setHasMediaPermissions] = useState(false);
 
   const [galleryItems, setGalleryItems] = useState([]);
 
@@ -36,12 +37,14 @@ export default function CameraScreen() {
         await ImagePicker.requestMediaLibraryPermissionsAsync();
       setHasGalleryPermissions(galleryStatus.status == "granted");
 
-      if (galleryStatus.status === "granted") {
+      const MediaStatus = await MediaLibrary.requestPermissionsAsync();
+      setHasMediaPermissions(MediaStatus.status == "granted");
+
+      if (ImagePicker.status === "granted") {
         try {
-          const userGalleryMedia = await MediaLibrary.getAssetsAsync({
-            sortBy: ["creationTime"],
-            mediaType: ["video"],
-          });
+          console.log("f0", MediaStatus);
+          const userGalleryMedia = await MediaLibrary.getAssetsAsync();
+          console.log("failed");
           setGalleryItems(userGalleryMedia.assets);
         } catch (error) {
           console.log("46", error);
@@ -75,7 +78,7 @@ export default function CameraScreen() {
 
   const pickFromGallery = async () => {
     let res = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [16, 9],
       quality: 1,
@@ -83,7 +86,12 @@ export default function CameraScreen() {
     if (!res.canceled) {
     }
   };
-  if (!hasCameraPermissions || !hasAudioPermissions || !hasGalleryPermissions) {
+  if (
+    !hasCameraPermissions ||
+    !hasAudioPermissions ||
+    !hasGalleryPermissions ||
+    !hasMediaPermissions
+  ) {
     return <View></View>;
   }
 
