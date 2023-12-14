@@ -21,10 +21,10 @@ export const userAuthStateListener = () => (dispatch) => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       dispatch(getCurrentUserInfo());
-      console.log("dispatch action");
+      // console.log("dispatch action");
     } else {
       dispatch({ type: USER_STATE_CHANGE, currentUser: null, loaded: true });
-      console.log("dispatch action null");
+      // console.log("dispatch action null");
     }
   });
 };
@@ -34,9 +34,7 @@ export const getCurrentUserInfo = () => async (dispatch) => {
   const userRef = collection(db, "user");
   const docRef = doc(userRef, auth.currentUser.uid);
   const res = await getDoc(docRef);
-  console.log(res.data());
   if (res.exists) {
-    console.log(res.data());
     return dispatch({
       type: USER_STATE_CHANGE,
       currentUser: res.data(),

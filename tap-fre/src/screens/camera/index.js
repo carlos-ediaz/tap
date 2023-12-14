@@ -6,6 +6,7 @@ import { Audio } from "expo-av";
 import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
 import { useIsFocused } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 
 export default function CameraScreen() {
@@ -36,11 +37,15 @@ export default function CameraScreen() {
       setHasGalleryPermissions(galleryStatus.status == "granted");
 
       if (galleryStatus.status === "granted") {
-        const userGalleryMedia = await MediaLibrary.getAssetsAsync({
-          sortBy: ["creationTime"],
-          mediaType: ["video"],
-        });
-        setGalleryItems(userGalleryMedia.assets);
+        try {
+          const userGalleryMedia = await MediaLibrary.getAssetsAsync({
+            sortBy: ["creationTime"],
+            mediaType: ["video"],
+          });
+          setGalleryItems(userGalleryMedia.assets);
+        } catch (error) {
+          console.log("46", error);
+        }
       }
     })();
   }, []);
@@ -68,6 +73,16 @@ export default function CameraScreen() {
     }
   };
 
+  const pickFromGallery = async () => {
+    let res = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+      allowsEditing: true,
+      aspect: [16, 9],
+      quality: 1,
+    });
+    if (!res.canceled) {
+    }
+  };
   if (!hasCameraPermissions || !hasAudioPermissions || !hasGalleryPermissions) {
     return <View></View>;
   }
@@ -84,7 +99,43 @@ export default function CameraScreen() {
           onCameraReady={() => setCameraReady(true)}
         />
       ) : null}
-
+      <View style={styles.sideBarContainer}>
+        <TouchableOpacity
+          style={styles.sideBarButton}
+          onPress={() =>
+            setCameraType(
+              cameraType === Camera.Constants.Type.back
+                ? Camera.Constants.Type.front
+                : Camera.Constants.Type.back
+            )
+          }
+        >
+          <Ionicons name="camera-reverse-outline" size={24} color="white" />
+          <Text style={styles.iconText}>Flip</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.sideBarButton}
+          onPress={() => {
+            setCameraFlash(
+              cameraFlash === Camera.Constants.FlashMode.off
+                ? Camera.Constants.FlashMode.torch
+                : Camera.Constants.FlashMode.off
+            );
+            console.log("flash:", cameraFlash);
+          }}
+        >
+          <Ionicons
+            name={
+              cameraFlash === Camera.Constants.FlashMode.off
+                ? "flash-outline"
+                : "flash-off-outline"
+            }
+            size={24}
+            color="white"
+          />
+          <Text style={styles.iconText}>Flash</Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.bottomBarContainer}>
         <View style={{ flex: 1 }}></View>
         <View style={styles.recordButtonContainer}>
@@ -96,7 +147,10 @@ export default function CameraScreen() {
           />
         </View>
         <View style={{ flex: 1 }}>
-          <TouchableOpacity style={styles.galleryButton}>
+          <TouchableOpacity
+            onPress={() => pickFromGallery()}
+            style={styles.galleryButton}
+          >
             {galleryItems[0] ? (
               <Image
                 style={styles.galleryButtonImage}
