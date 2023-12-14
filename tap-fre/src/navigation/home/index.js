@@ -2,6 +2,7 @@ import { View, Text } from "react-native";
 import React from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { AntDesign } from "@expo/vector-icons";
+import CameraScreen from "../../screens/camera";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -25,7 +26,7 @@ export default function HomeScreen() {
       />
       <Tab.Screen
         name="Add"
-        component={EmptyScreen}
+        component={CameraScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <AntDesign name="camerao" size={24} color="black" />
