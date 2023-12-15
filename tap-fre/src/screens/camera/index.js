@@ -5,7 +5,7 @@ import { Camera } from "expo-camera";
 import { Audio } from "expo-av";
 import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 
@@ -25,6 +25,7 @@ export default function CameraScreen() {
   const [cameraReady, setCameraReady] = useState(false);
 
   const isFocused = useIsFocused();
+  const navigation = useNavigation();
   useEffect(() => {
     (async () => {
       const cameraStatus = await Camera.requestCameraPermissionsAsync();
@@ -40,14 +41,14 @@ export default function CameraScreen() {
       const MediaStatus = await MediaLibrary.requestPermissionsAsync();
       setHasMediaPermissions(MediaStatus.status == "granted");
 
-      if (ImagePicker.status === "granted") {
+      if (galleryStatus.status === "granted") {
         try {
-          console.log("f0", MediaStatus);
-          const userGalleryMedia = await MediaLibrary.getAssetsAsync();
-          console.log("failed");
+          const userGalleryMedia = await MediaLibrary.getAssetsAsync({
+            sortBy: ["creationTime"],
+          });
           setGalleryItems(userGalleryMedia.assets);
         } catch (error) {
-          console.log("46", error);
+          console.log(error);
         }
       }
     })();
@@ -64,6 +65,7 @@ export default function CameraScreen() {
         if (videoRecordPromise) {
           const data = await videoRecordPromise;
           const source = data.uri;
+          navigation.navigate("savePost", { source });
         }
       } catch (error) {
         console.log(error);
@@ -77,13 +79,16 @@ export default function CameraScreen() {
   };
 
   const pickFromGallery = async () => {
+    console.log("enter func");
     let res = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [16, 9],
       quality: 1,
     });
     if (!res.canceled) {
+      navigation.navigate("savePost", { source: res.assets });
+    } else {
+      console.log("canceled");
     }
   };
   if (

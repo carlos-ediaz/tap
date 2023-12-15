@@ -8,6 +8,7 @@ import AuthScreen from "../../screens/auth";
 import HomeScreen from "../home";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { fdb } from "../../../db";
+import SavePostScreen from "../../screens/savePost";
 
 const Stack = createNativeStackNavigator();
 //opt
@@ -27,11 +28,18 @@ export default function Route() {
     <NavigationContainer>
       <Stack.Navigator>
         {currentUserObj?.currentUser ? (
-          <Stack.Screen
-            name="home"
-            component={HomeScreen}
-            options={{ headerShown: false }}
-          />
+          <>
+            <Stack.Screen
+              name="home"
+              component={HomeScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="savePost"
+              component={SavePostScreen}
+              options={{ headerShown: false }}
+            />
+          </>
         ) : (
           <Stack.Screen
             name="auth"
