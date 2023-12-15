@@ -63,12 +63,16 @@ export default function CameraScreen() {
         };
         const videoRecordPromise = cameraRef.recordAsync(options);
         if (videoRecordPromise) {
+          console.log("qweqe:", videoRecordPromise);
           const data = await videoRecordPromise;
-          const source = data.uri;
+          const source = data;
+          console.log("source:", source);
           navigation.navigate("savePost", { source });
+        } else {
+          console.log("nope", videoRecordPromise);
         }
       } catch (error) {
-        console.log(error);
+        console.log("71 err: ", error);
       }
     }
   };
@@ -86,7 +90,7 @@ export default function CameraScreen() {
       quality: 1,
     });
     if (!res.canceled) {
-      navigation.navigate("savePost", { source: res.assets });
+      navigation.navigate("savePost", { source: res.assets[0] });
     } else {
       console.log("canceled");
     }
