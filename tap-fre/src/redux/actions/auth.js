@@ -21,10 +21,8 @@ export const userAuthStateListener = () => (dispatch) => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       dispatch(getCurrentUserInfo());
-      // console.log("dispatch action");
     } else {
       dispatch({ type: USER_STATE_CHANGE, currentUser: null, loaded: true });
-      // console.log("dispatch action null");
     }
   });
 };

@@ -63,16 +63,12 @@ export default function CameraScreen() {
         };
         const videoRecordPromise = cameraRef.recordAsync(options);
         if (videoRecordPromise) {
-          console.log("qweqe:", videoRecordPromise);
           const data = await videoRecordPromise;
           const source = data;
-          console.log("source:", source);
           navigation.navigate("savePost", { source });
-        } else {
-          console.log("nope", videoRecordPromise);
         }
       } catch (error) {
-        console.log("71 err: ", error);
+        console.log(error);
       }
     }
   };
@@ -83,7 +79,6 @@ export default function CameraScreen() {
   };
 
   const pickFromGallery = async () => {
-    console.log("enter func");
     let res = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -138,7 +133,6 @@ export default function CameraScreen() {
                 ? Camera.Constants.FlashMode.torch
                 : Camera.Constants.FlashMode.off
             );
-            console.log("flash:", cameraFlash);
           }}
         >
           <Ionicons

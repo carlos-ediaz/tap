@@ -3,6 +3,7 @@ import React from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { AntDesign } from "@expo/vector-icons";
 import CameraScreen from "../../screens/camera";
+import FeedScreen from "../../screens/feed";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -17,7 +18,7 @@ export default function HomeScreen() {
     >
       <Tab.Screen
         name="Home"
-        component={EmptyScreen}
+        component={FeedScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <AntDesign name="home" size={24} color="black" />

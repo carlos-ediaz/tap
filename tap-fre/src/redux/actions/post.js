@@ -17,21 +17,21 @@ export const createPost = (description, video) => async (dispatch) =>
     console.log(`path: post/${auth.currentUser.uid}/${uuid()}`);
 
     saveMediaToStorage(video, `post/${auth.currentUser.uid}/${uuid()}`)
-      .then(async (downloadURL) => {
-        console.log("url is:", downloadURL);
+      .then(async (media) => {
+        console.log("url is:", media);
         const db = getFirestore(fdb);
         const docRef = await addDoc(collection(db, "post"), {
           creator: auth.currentUser.uid,
-          downloadURL,
+          media,
           description,
           likes: 0,
           comments: 0,
           creation: serverTimestamp(),
         })
           .then(() => resolve())
-          .catch((error) => reject(console.log("29", error)));
+          .catch((error) => reject(console.log(error)));
       })
       .catch((error) => {
-        reject(console.log("31", error));
+        reject(console.log(error));
       });
   });

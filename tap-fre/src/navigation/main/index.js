@@ -22,8 +22,6 @@ export default function Route() {
     dispatch(userAuthStateListener());
   }, []);
 
-  //console.log(currentUserObj.currentUser);
-
   return (
     <NavigationContainer>
       <Stack.Navigator>
