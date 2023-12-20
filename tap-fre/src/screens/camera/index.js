@@ -23,6 +23,7 @@ export default function CameraScreen() {
     Camera.Constants.FlashMode.off
   );
   const [cameraReady, setCameraReady] = useState(false);
+  const [mediaType, setMediaType] = useState("none");
 
   const isFocused = useIsFocused();
   const navigation = useNavigation();
@@ -65,7 +66,7 @@ export default function CameraScreen() {
         if (videoRecordPromise) {
           const data = await videoRecordPromise;
           const source = data;
-          navigation.navigate("savePost", { source });
+          navigation.navigate("savePost", { source, type: "video" });
         }
       } catch (error) {
         console.log(error);
@@ -84,8 +85,22 @@ export default function CameraScreen() {
       allowsEditing: true,
       quality: 1,
     });
+
+    let fileType = "none";
+    if (res.assets[0].type == "image") {
+      console.log("image");
+      setMediaType("image");
+      fileType = "image";
+    } else {
+      console.log("video");
+      setMediaType("video");
+      fileType = "video";
+    }
     if (!res.canceled) {
-      navigation.navigate("savePost", { source: res.assets[0] });
+      navigation.navigate("savePost", {
+        source: res.assets[0],
+        type: fileType,
+      });
     } else {
       console.log("canceled");
     }
@@ -152,7 +167,10 @@ export default function CameraScreen() {
         <View style={styles.recordButtonContainer}>
           <TouchableOpacity
             disabled={!cameraReady}
-            onLongPress={() => recordVideo()}
+            onLongPress={() => {
+              recordVideo();
+              console.log("long");
+            }}
             onPressOut={() => stopVideo()}
             style={styles.recordButton}
           />

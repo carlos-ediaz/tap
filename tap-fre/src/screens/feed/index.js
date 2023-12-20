@@ -5,10 +5,14 @@ import { Dimensions } from "react-native";
 import PostSingle from "../../components/auth/post";
 import { getFeed } from "../../services/posts";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import ImageSingle from "../../components/auth/image";
+import { Image } from "expo-image";
 
 export default function FeedScreen() {
   const mediaRefs = useRef([]);
   const [posts, setPosts] = useState([]);
+
+  const ref = useRef(null);
 
   useEffect(() => {
     getFeed().then(setPosts);
@@ -21,9 +25,13 @@ export default function FeedScreen() {
       const cell = mediaRefs.current[element.key];
       if (cell) {
         if (element.isViewable) {
-          cell.play();
+          if (element.item.type === "video") {
+            cell.play();
+          }
         } else {
-          cell.stop();
+          if (element.item.type === "video") {
+            cell.stop();
+          }
         }
       }
     });
@@ -31,7 +39,6 @@ export default function FeedScreen() {
   //const feedItemHeight = Dimensions.get("window").height - 30;
 
   const renderItem = ({ item, index }) => {
-    console.log("render:::", item.id);
     return (
       <View
         style={[
@@ -42,10 +49,23 @@ export default function FeedScreen() {
           },
         ]}
       >
-        <PostSingle
-          item={item}
-          ref={(PostSingleRef) => (mediaRefs.current[item.id] = PostSingleRef)}
-        />
+        {item.type === "video" ? (
+          <>
+            <PostSingle
+              item={item}
+              ref={(PostSingleRef) =>
+                (mediaRefs.current[item.id] = PostSingleRef)
+              }
+            />
+          </>
+        ) : (
+          <ImageSingle
+            item={item}
+            ref={(PostSingleRef) =>
+              (mediaRefs.current[item.id] = PostSingleRef)
+            }
+          />
+        )}
       </View>
     );
   };

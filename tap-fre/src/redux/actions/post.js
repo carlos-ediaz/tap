@@ -11,12 +11,9 @@ import uuid from "uuid-random";
 
 const auth = getAuth(fdb);
 
-export const createPost = (description, video) => async (dispatch) =>
+export const createPost = (description, file, type) => async (dispatch) =>
   new Promise((resolve, reject) => {
-    console.log("info:", description, "video:", video);
-    console.log(`path: post/${auth.currentUser.uid}/${uuid()}`);
-
-    saveMediaToStorage(video, `post/${auth.currentUser.uid}/${uuid()}`)
+    saveMediaToStorage(file, `post/${auth.currentUser.uid}/${uuid()}`)
       .then(async (media) => {
         console.log("url is:", media);
         const db = getFirestore(fdb);
@@ -24,6 +21,7 @@ export const createPost = (description, video) => async (dispatch) =>
           creator: auth.currentUser.uid,
           media,
           description,
+          type,
           likes: 0,
           comments: 0,
           creation: serverTimestamp(),

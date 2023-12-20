@@ -10,6 +10,7 @@ import { createPost } from "../../redux/actions/post";
 import { ActivityIndicator } from "react-native-paper";
 
 export default function SavePostScreen(props) {
+
   const [description, setDescription] = useState("");
   const [requestRunning, setRequestRunning] = useState(false);
   const navigation = useNavigation();
@@ -17,7 +18,13 @@ export default function SavePostScreen(props) {
   const handleSavePost = () => {
     setRequestRunning(true);
 
-    dispatch(createPost(description, props.route.params.source.uri))
+    dispatch(
+      createPost(
+        description,
+        props.route.params.source.uri,
+        props.route.params.type
+      )
+    )
       .then(() => navigation.dispatch(StackActions.popToTop()))
       .catch(() => setRequestRunning(false));
   };

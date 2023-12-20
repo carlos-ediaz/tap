@@ -3,6 +3,7 @@ import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { Video, ResizeMode } from "expo-av";
 import styles from "./styles";
 import { useEffect } from "react";
+import { Image } from "expo-image";
 
 export const PostSingle = forwardRef(({ item }, parentRef) => {
   const ref = useRef(null);
@@ -56,7 +57,6 @@ export const PostSingle = forwardRef(({ item }, parentRef) => {
       console.log(error);
     }
   };
-  console.log("Media::", item.media);
   return (
     <>
       <Video
