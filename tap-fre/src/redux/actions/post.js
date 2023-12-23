@@ -3,11 +3,16 @@ import {
   serverTimestamp,
   getFirestore,
   addDoc,
+  query,
+  orderBy,
+  getDocs,
+  where,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { fdb } from "../../../db";
 import { saveMediaToStorage } from "./utils";
 import uuid from "uuid-random";
+import { CURRENT_USER_POSTS_UPDATE } from "../constants";
 
 const auth = getAuth(fdb);
 
@@ -33,3 +38,24 @@ export const createPost = (description, file, type) => async (dispatch) =>
         reject(console.log(error));
       });
   });
+export const getPostsByUser =
+  (uid = auth.currentUser.uid) =>
+  async (dispatch) =>
+    new Promise(async (resolve, reject) => {
+      const db = getFirestore(fdb);
+      const postRef = collection(db, "post");
+      const postsList = query(
+        postRef,
+        where("creator", "==", uid),
+        orderBy("creation", "desc")
+      );
+      const res = await getDocs(postsList);
+      let posts = [];
+      res.forEach((post) => {
+        const data = post.data();
+        const id = post.id;
+        posts.push({ id, ...data });
+      });
+
+      dispatch({ type: CURRENT_USER_POSTS_UPDATE, currentUserPosts: posts });
+    });

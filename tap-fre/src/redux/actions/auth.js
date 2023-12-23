@@ -11,9 +11,11 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  sendSignInLinkToEmail,
 } from "firebase/auth";
 import { fdb } from "../../../db";
 import { USER_STATE_CHANGE } from "../constants";
+import { getPostsByUser } from "./post";
 
 const auth = getAuth(fdb);
 
@@ -21,6 +23,7 @@ export const userAuthStateListener = () => (dispatch) => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       dispatch(getCurrentUserInfo());
+      dispatch(getPostsByUser(auth.currentUser.uid));
     } else {
       dispatch({ type: USER_STATE_CHANGE, currentUser: null, loaded: true });
     }
@@ -79,3 +82,34 @@ export const register = (email, password) => (dispatch) =>
         reject(error);
       });
   });
+
+/*
+export const register = (email, password) => (dispatch) =>
+  new Promise((resolve, reject) => {
+    sendSignInLinkToEmail(auth, email, actionCodeSettings)
+      .then(() => {
+        resolve();
+      })
+      .catch((error) => {
+        console.log("Error__:", error);
+        reject(error);
+      });
+  });
+
+const actionCodeSettings = {
+  // URL you want to redirect back to. The domain (www.example.com) for this
+  // URL must be in the authorized domains list in the Firebase Console.
+  url: "https://www.example.com",
+  // This must be true.
+  handleCodeInApp: true,
+  iOS: {
+    bundleId: "com.example.ios",
+  },
+  android: {
+    packageName: "com.example.android",
+    installApp: true,
+    minimumVersion: "12",
+  },
+  dynamicLinkDomain: "example.page.link",
+};
+*/
