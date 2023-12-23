@@ -4,6 +4,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import { AntDesign } from "@expo/vector-icons";
 import CameraScreen from "../../screens/camera";
 import FeedScreen from "../../screens/feed";
+import ProfileScreen from "../../screens/profile";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -36,7 +37,7 @@ export default function HomeScreen() {
       />
       <Tab.Screen
         name="Profile"
-        component={EmptyScreen}
+        component={ProfileScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <AntDesign name="user" size={24} color="black" />
