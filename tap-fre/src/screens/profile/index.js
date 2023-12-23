@@ -9,8 +9,6 @@ import ProfilePostList from "../../components/profile/postList";
 export default function ProfileScreen() {
   const currentUser = useSelector((state) => state.auth.currentUser);
   const currentUserPosts = useSelector((state) => state.posts.currentUserPosts);
-  console.log("cUser", currentUser);
-  console.log("CurrentUserPosts:", currentUserPosts);
   return (
     <View style={styles.container}>
       <ProfileNavBar user={currentUser} />

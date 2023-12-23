@@ -4,14 +4,13 @@ import styles from "../navBar/styles";
 import { FlatList } from "react-native";
 import ProfilePostListItem from "./item";
 
-export default function ProfilePostList({ currentUserPosts }) {
-  console.log("CurrentUserPosts pr:", currentUserPosts);
+export default function ProfilePostList(currentUserPosts) {
   return (
     <View style={styles.container}>
       <FlatList
         numColumns={3}
         removeClippedSubviews
-        data={currentUserPosts}
+        data={currentUserPosts.posts}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <ProfilePostListItem item={item} />}
       />
