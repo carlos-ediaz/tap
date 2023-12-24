@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { fdb } from "../../../db";
-import { saveMediaToStorage } from "./utils";
+import { saveMediaToStorage } from "../../services/utils";
 import uuid from "uuid-random";
 import { CURRENT_USER_POSTS_UPDATE } from "../constants";
 

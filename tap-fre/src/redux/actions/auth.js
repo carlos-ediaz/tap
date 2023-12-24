@@ -48,18 +48,6 @@ export const getCurrentUserInfo = () => async (dispatch) => {
       loaded: true,
     });
   }
-
-  /*
-  onSnapshot(doc(userRef, auth.currentUser.uid), (doc) => {
-    if (doc.exists) {
-      console.log(doc.data());
-      return dispatch({
-        type: USER_STATE_CHANGE,
-        currentUser: doc.data(),
-        loaded: truth,
-      });
-    }
-  });*/
 };
 export const login = (email, password) => (dispatch) =>
   new Promise((resolve, reject) => {

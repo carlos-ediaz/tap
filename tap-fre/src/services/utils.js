@@ -1,5 +1,5 @@
 import { getAuth } from "firebase/auth";
-import { fdb } from "../../../db";
+import { fdb } from "../../db";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 const auth = getAuth(fdb);

@@ -88,11 +88,9 @@ export default function CameraScreen() {
 
     let fileType = "none";
     if (res.assets[0].type == "image") {
-      console.log("image");
       setMediaType("image");
       fileType = "image";
     } else {
-      console.log("video");
       setMediaType("video");
       fileType = "video";
     }
