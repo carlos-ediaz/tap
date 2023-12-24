@@ -9,6 +9,7 @@ import HomeScreen from "../home";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { fdb } from "../../../db";
 import SavePostScreen from "../../screens/savePost";
+import EditProfileScreen from "../../screens/profile/edit";
 
 const Stack = createNativeStackNavigator();
 //opt
@@ -35,6 +36,11 @@ export default function Route() {
             <Stack.Screen
               name="savePost"
               component={SavePostScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="editProfile"
+              component={EditProfileScreen}
               options={{ headerShown: false }}
             />
           </>

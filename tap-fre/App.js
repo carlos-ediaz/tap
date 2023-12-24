@@ -7,13 +7,16 @@ import rootReducer from "./src/redux/reducers";
 import { thunk } from "redux-thunk";
 
 import Route from "./src/navigation/main";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <Route />
-    </Provider>
+    <SafeAreaProvider>
+      <Provider store={store}>
+        <Route />
+      </Provider>
+    </SafeAreaProvider>
   );
 }
