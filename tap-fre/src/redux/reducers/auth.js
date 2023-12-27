@@ -6,8 +6,6 @@ const initialState = {
 };
 
 export const auth = (state = initialState, action) => {
-  console.log("Act____", action);
-  console.log("Type____", action.type);
   switch (action.type) {
     case USER_STATE_CHANGE:
       return {

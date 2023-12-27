@@ -27,7 +27,6 @@ export default function EditProfileScreen() {
       getCurrentUserInfo();
     }
   };
-  console.log("___from:__/", currentUser.photoURL);
   return (
     <SafeAreaView style={styles.container}>
       <NavBarGaneral title="Profile" />
@@ -55,6 +54,22 @@ export default function EditProfileScreen() {
           <Text>Display name</Text>
           <View style={styles.fieldValueContainer}>
             <Text>{currentUser.displayName}</Text>
+            <EvilIcons name="chevron-right" size={24} color="black" />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.fieldItemContainer}
+          onPress={() =>
+            navigation.navigate("editProfileField", {
+              title: "Phone Number",
+              field: "phoneNumber",
+              value: currentUser.phoneNumber,
+            })
+          }
+        >
+          <Text>Phone Number</Text>
+          <View style={styles.fieldValueContainer}>
+            <Text>{currentUser.phoneNumber}</Text>
             <EvilIcons name="chevron-right" size={24} color="black" />
           </View>
         </TouchableOpacity>

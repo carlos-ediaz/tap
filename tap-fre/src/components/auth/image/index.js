@@ -4,9 +4,12 @@ import { Video, ResizeMode } from "expo-av";
 import styles from "./styles";
 import { useEffect } from "react";
 import { Image } from "expo-image";
+import { useUser } from "../../../hooks/useUsers";
 
 export const ImageSingle = forwardRef(({ item }, parentRef) => {
   const ref = useRef(null);
+  const user = useUser(item.creator);
+  console.log("Gotten", user);
 
   useImperativeHandle(parentRef, () => ({
     unload,

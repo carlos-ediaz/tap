@@ -8,14 +8,20 @@ import { thunk } from "redux-thunk";
 
 import Route from "./src/navigation/main";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { refetchInterval: false, staleTime: Infinity } },
+});
 export default function App() {
   return (
     <SafeAreaProvider>
       <Provider store={store}>
-        <Route />
+        <QueryClientProvider client={queryClient}>
+          <Route />
+        </QueryClientProvider>
       </Provider>
     </SafeAreaProvider>
   );

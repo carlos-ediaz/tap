@@ -1,7 +1,16 @@
 import { saveMediaToStorage } from "./utils";
 import { fdb } from "../../db";
 import { getStorage } from "firebase/storage";
-import { doc, getFirestore, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const auth = getAuth(fdb);
@@ -12,7 +21,6 @@ export const saveUserProfileImage = (image) =>
     console.log("...uploading picture");
     saveMediaToStorage(image, `profileImage/${auth.currentUser.uid}`).then(
       async (res) => {
-        console.log("__res__", res);
         userRef = doc(db, "user", auth.currentUser.uid);
         await updateDoc(userRef, {
           photoURL: res,
@@ -28,7 +36,6 @@ export const saveUserField = (field, value) =>
     console.log("...saving changes");
     let obj = {};
     obj[field] = value;
-    console.log("value to update", field);
     userRef = doc(db, "user", auth.currentUser.uid);
     if (field === "displayName") {
       await updateDoc(userRef, {
@@ -44,4 +51,37 @@ export const saveUserField = (field, value) =>
         .then(() => resolve())
         .catch(() => reject());
     }
+  });
+
+export const getUserByEmail = (email) =>
+  new Promise(async (resolve, reject) => {
+    if (email === "") {
+      resolve([]);
+    }
+    const userRef = collection(db, "user");
+    const userInfo = query(
+      userRef,
+      where("email", ">=", email),
+      where("email", "<=", email + "\uf8ff")
+    );
+    const res = await getDocs(userInfo)
+      .then((res) => {
+        let user = res.docs.map((doc) => {
+          const data = doc.data();
+          const id = post.id;
+          return { id, ...data };
+        });
+        resolve(user);
+      })
+      .catch(() => reject());
+  });
+
+export const getUserById = (id) =>
+  new Promise(async (resolve, reject) => {
+    const userRef = doc(db, "user", id);
+    const userInfo = await getDoc(userRef)
+      .then((res) => {
+        resolve(res.exists ? res.data() : null);
+      })
+      .catch(() => reject());
   });

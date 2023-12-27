@@ -39,6 +39,7 @@ export default function FeedScreen() {
   //const feedItemHeight = Dimensions.get("window").height - 30;
 
   const renderItem = ({ item, index }) => {
+    // console.log("Rendering::", item)
     return (
       <View
         style={[

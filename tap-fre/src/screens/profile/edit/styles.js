@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
   },
   fieldItemContainer: {
     flexDirection: "row",
+    padding: 10,
     justifyContent: "space-between",
     alignItems: "center",
   },

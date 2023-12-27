@@ -73,6 +73,24 @@ export default function CameraScreen() {
       }
     }
   };
+  const takePhoto = async () => {
+    if (cameraRef) {
+      try {
+        const options = {
+          maxDuration: 30,
+          quality: 1,
+        };
+        const takePicturePromise = cameraRef.takePictureAsync(options);
+        if (takePicturePromise) {
+          const data = await takePicturePromise;
+          const source = data;
+          navigation.navigate("savePost", { source, type: "image" });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   const stopVideo = async () => {
     if (cameraRef) {
       cameraRef.stopRecording();
@@ -169,7 +187,10 @@ export default function CameraScreen() {
               recordVideo();
               console.log("long");
             }}
-            onPress={() }
+            onPress={() => {
+              takePhoto();
+              console.log("single");
+            }}
             onPressOut={() => stopVideo()}
             style={styles.recordButton}
           />
