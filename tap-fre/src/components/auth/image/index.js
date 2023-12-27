@@ -5,11 +5,11 @@ import styles from "./styles";
 import { useEffect } from "react";
 import { Image } from "expo-image";
 import { useUser } from "../../../hooks/useUsers";
+import PostSingleOption from "../options";
 
 export const ImageSingle = forwardRef(({ item }, parentRef) => {
   const ref = useRef(null);
   const user = useUser(item.creator);
-  console.log("Gotten", user);
 
   useImperativeHandle(parentRef, () => ({
     unload,
@@ -31,6 +31,7 @@ export const ImageSingle = forwardRef(({ item }, parentRef) => {
   };
   return (
     <>
+      <PostSingleOption user={user} post={item} />
       <Image
         style={{
           flex: 1,

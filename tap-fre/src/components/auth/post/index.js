@@ -5,10 +5,12 @@ import styles from "./styles";
 import { useEffect } from "react";
 import { Image } from "expo-image";
 import { useUser } from "../../../hooks/useUsers";
+import PostSingleOption from "../options";
 
 export const PostSingle = forwardRef(({ item }, parentRef) => {
   const ref = useRef(null);
-  const user = useUser(item.creator);
+  const { data } = useUser(item.creator);
+  const user = data;
 
   useImperativeHandle(parentRef, () => ({
     play,
@@ -61,6 +63,7 @@ export const PostSingle = forwardRef(({ item }, parentRef) => {
   };
   return (
     <>
+      <PostSingleOption user={user} post={item} />
       <Video
         ref={ref}
         style={styles.container}
