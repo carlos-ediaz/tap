@@ -5,14 +5,24 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 999,
     bottom: 0,
-    padding: 20,
+    padding: 5,
+    right: 0,
+    flex: 1,
+    backgroundColor: "#075E54",
+    flexDirection: "row",
+    alignItems: "center",
   },
-  displayName: {
+  button: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  phoneNumber: {
     color: "white",
     fontWeight: "bold",
-    fontSize: 16,
-    bottom: 0,
-    zIndex: 999,
+    fontSize: 18,
+  },
+  whatsLogo: {
+    padding: 5,
   },
 });
 export default styles;
