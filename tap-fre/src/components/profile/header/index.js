@@ -11,7 +11,7 @@ export default function ProfileHeader({ user }) {
   const currentUser = useSelector((state) => state.auth.currentUser);
 
   function sendMessage() {
-    const link = `whatsapp://send?phone=573025288072&text=Texto de prueba Tap`;
+    const link = `whatsapp://send?phone=573025288072&text=Ví tu anuncio de Tap`;
     Linking.openURL(link)
       .then(() => {
         console.log("WhatsApp Opened");

@@ -169,6 +169,7 @@ export default function CameraScreen() {
               recordVideo();
               console.log("long");
             }}
+            onPress={() }
             onPressOut={() => stopVideo()}
             style={styles.recordButton}
           />

@@ -27,6 +27,20 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0, 0.5)",
     ...StyleSheet.absoluteFill,
   },
+  fieldsContainer: {
+    marginTop: 20,
+    padding: 20,
+    flex: 1,
+  },
+  fieldItemContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  fieldValueContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
 });
 
 export default styles;

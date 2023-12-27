@@ -22,3 +22,26 @@ export const saveUserProfileImage = (image) =>
       }
     );
   });
+
+export const saveUserField = (field, value) =>
+  new Promise(async (resolve, reject) => {
+    console.log("...saving changes");
+    let obj = {};
+    obj[field] = value;
+    console.log("value to update", field);
+    userRef = doc(db, "user", auth.currentUser.uid);
+    if (field === "displayName") {
+      await updateDoc(userRef, {
+        displayName: value,
+      })
+        .then(() => resolve())
+        .catch(() => reject());
+    }
+    if (field === "phoneNumber") {
+      await updateDoc(userRef, {
+        phoneNumber: value,
+      })
+        .then(() => resolve())
+        .catch(() => reject());
+    }
+  });

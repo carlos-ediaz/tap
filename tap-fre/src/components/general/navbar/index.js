@@ -20,9 +20,12 @@ export default function NavBarGaneral({
 
       <Text style={styles.title}>{title}</Text>
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => (leftButton.display ? leftButton.action() : null)}
+      >
         <AntDesign
-          name="arrowleft"
+          name={leftButton.name}
           size={24}
           color={leftButton.display ? "black" : "white"}
         />
